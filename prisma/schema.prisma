@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id               Int      @id @default(autoincrement())
+  slug             String   @unique
+  title            String
+  type             String
+  locationType     String
+  location         String?
+  description      String?
+  salary           Int
+  companyName      String
+  applicationEmail String?
+  applicationUrl   String?
+  companyLogoUrl   String?
+  approved         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("jobs")
+}
+
+// naming convention for sql table is the model name in lowercase and plural
+
+// if u want to change the database schema that is in production u have to use prisma migrate
+// prisma migrate is a tool that helps u to make changes to the database schema
+// and it will also help u to make the changes in a way that is safe and easy to undo
+// if something goes wrong
+
